@@ -1,4 +1,6 @@
 #include <iostream>
+#include <thread.h>
+#include <SharedObject.h>
 
 /*
 struct MyShared{
@@ -13,7 +15,7 @@ int main(void)
 	// This is a possible starting point for using threads and shared memory. 
 	// You do not have to start with this
 	////////////////////////////////////////////////////////////////////////
-	/*...
+	
 	Shared<MyShared> shared("sharedMemory", true); //This is the owner of sharedMamory
 	...
 	while(true){
@@ -25,7 +27,7 @@ int main(void)
 	//example for one thread thread1
 	thread1->flag= true;
 	delete thread1;
-	*/
+	
 }
 
 
@@ -33,7 +35,7 @@ int main(void)
 // This is a possible starting point for using threads and shared memory. 
 // You do not have to start with this
 ////////////////////////////////////////////////////////////////////////
-/*class WriterThread : public Thread{
+class WriterThread : public Thread{
 	public:
 		int 	threadNum;
 		bool	flag;
@@ -43,7 +45,7 @@ int main(void)
 		}
 
 		virtual long ThreadMain(void) override{
-			...
+			
 			//declare shared memory var so this thread can access it
 			Shared<MyShared> sharedMemory ("sharedMemory");
 			while(true)
@@ -56,4 +58,4 @@ int main(void)
 			}
 		}
 };
-*/
+
