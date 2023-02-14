@@ -4,19 +4,10 @@
 
 
 struct MyShared{
-
-private:
-    int threadId;
-    int reportId;
-    int time;
-
-public:
-MyShared(int tId, int rId, int tm)
-{
-    threadId = tId;
-    reportId = rId;
-    time = tm;
-}    
+    int thId;
+    int repId;
+    int tDelay;
+    int tElap;
     
 };
 

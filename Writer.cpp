@@ -1,6 +1,7 @@
 #include <iostream>
 #include "thread.h"
 #include "SharedObject.h"
+#include "Semaphore.h"
 #include <thread>
 #include <stack>
 #include <unistd.h>
@@ -16,13 +17,16 @@ struct MyShared{
     
 };
 
+	Semaphore rSem("reader", 1, true);
+	Semaphore wSem("writer", 1, true);
+
 class WriterThread : public Thread{
 	public:
 		int threadNum;
 		bool flag = false;
 		int delay;
 		int reportId = 0;
-		//MyShared share;
+		
 		
 		
 		WriterThread(int d, int num):Thread(8*1000){
@@ -40,12 +44,14 @@ class WriterThread : public Thread{
 			{
 				this->reportId++;
 				time_t first = time(0);
+				wSem.Wait();
 				sleep(delay);
 				time_t last = time(0);
 				sharedMemory->thId = threadNum;
 				sharedMemory->repId = reportId;
 				sharedMemory->tDelay = delay;
 				sharedMemory->tElap = (last-first);
+				rSem.Signal();
 				
 				if(flag == true)
 				{
