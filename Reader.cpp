@@ -4,29 +4,21 @@
 
 
 struct MyShared{
-
-private:
-    int threadId;
-    int reportId;
-    int time;
-
-public:
-MyShared(int tId, int rId, int tm)
-{
-    threadId = tId;
-    reportId = rId;
-    time = tm;
-}    
+    int thId;
+    int repId;
+    int tDelay;
+    int tElap;
     
-};
+};   
+    
 
 int main(void)
 {
 	std::cout << "I am a reader" << std::endl;
+	Shared<MyShared> shared("sharedMemory"); //This is the owner of sharedMamory
 	while(true){
-		Shared<MyShared> shared("sharedMemory"); //This is the owner of sharedMamory
-		std::cout << shared << std::endl;
-		std::cout << "Reader Thread: " << std::endl;
+		
+		std::cout << "Thread Id: " << shared->thId << "Report Id:" << shared->repId << "Time Elapsed" << shared->tElap << "Delay Time:" << shared->tDelay << std::endl;
 		sleep(2);
 	}
 }
