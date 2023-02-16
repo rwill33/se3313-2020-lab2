@@ -18,7 +18,7 @@ int main(void)
 	Shared<MyShared> shared("sharedMemory"); //This is the owner of sharedMamory
 	while(true){
 		
-		std::cout << "Thread Id: " << shared->thId << "Report Id:" << shared->repId << "Time Elapsed" << shared->tElap << "Delay Time:" << shared->tDelay << std::endl;
+		std::cout << "Thread Id: " << shared->thId << " | Report Id:" << shared->repId << " | Time Elapsed" << shared->tElap << " | Delay Time:" << shared->tDelay << std::endl;
 		sleep(2);
 	}
 }
