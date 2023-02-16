@@ -50,8 +50,9 @@ class WriterThread : public Thread{
 				sharedMemory->repId = reportId++;
 				sharedMemory->tDelay = delay;
 				sharedMemory->tElap = (last-first);
-				wSem.Signal();
+				// wSem.Signal();
 				rSem.Signal();
+
 				
 				if(flag == true)
 				{
