@@ -25,7 +25,7 @@ int main(void)
 		rSem.Wait();
 		wSem.Wait();
 
-		std::cout << "Thread Id: " << shared->thId << "Report Id:" << shared->repId << "Time Elapsed" << shared->tElap << "Delay Time:" << shared->tDelay << std::endl;
+		std::cout << "Thread Id: " << shared->thId << " | Report Id: " << shared->repId << " | Time Elapsed: " << shared->tElap << " | Delay Time: " << shared->tDelay << std::endl;
 		wSem.Signal();
 	}
 }

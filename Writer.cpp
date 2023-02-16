@@ -25,14 +25,14 @@ class WriterThread : public Thread{
 		int threadNum;
 		bool flag = false;
 		int delay;
-		int reportId = 0;
+		int reportId;
+		//MyShared share;
 		
 		
-		
-		WriterThread(int d, int num):Thread(8*1000){
-			threadNum = num; 
-			delay = d;
-
+		WriterThread(int delay, int tCount):Thread(8*1000){
+			this-> threadNum = tCount; 
+			this -> delay = delay;
+			this -> reportId = 0;
 
 		}
 
@@ -42,13 +42,12 @@ class WriterThread : public Thread{
 			Shared<MyShared> sharedMemory ("sharedMemory");
 			while(true)
 			{
-				this->reportId++;
 				time_t first = time(0);
 				wSem.Wait();
 				sleep(delay);
 				time_t last = time(0);
 				sharedMemory->thId = threadNum;
-				sharedMemory->repId = reportId;
+				sharedMemory->repId = reportId++;
 				sharedMemory->tDelay = delay;
 				sharedMemory->tElap = (last-first);
 				wSem.Signal();
@@ -67,8 +66,8 @@ int main(void)
 {
 	
 	Shared<MyShared> shared("sharedMemory", true);
-	std::cout << "I am a Writer" << std::endl;
-	std::string nThread = "";
+	cout << "I am a Writer" << endl;
+	string nThread = "";
 	int delay = 0;
 	WriterThread* th;
 	stack<WriterThread*> tStack;
@@ -76,19 +75,16 @@ int main(void)
 	while(true)
 	{
 	    tCount++;
-	    std::cout << "\nWould you like to create a new thread (y/n)?\n";
-	    std::cin >> nThread;
+	    cout << "\nWould you like to create a new thread (y/n)?\n";
+	    cin >> nThread;
 	    if(nThread == "n")
 	    {
 	        break;
 	    }
-	    std::cout << "\nWhat is the Time delay for this Thread in s?\n";
-	    std::cin >> delay;
-	    th = new WriterThread(tCount, delay);
+	    cout << "\nWhat is the Time delay for this Thread in s?\n";
+	    cin >> delay;
+	    th = new WriterThread(delay, tCount);
 	    tStack.push(th);
-	    
-	    
-	    
 	}
 	while(!tStack.empty())
 	{
