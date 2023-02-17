@@ -42,15 +42,15 @@ class WriterThread : public Thread{
 			Shared<MyShared> sharedMemory ("sharedMemory");
 			while(true)
 			{
-				time_t first = time(0);
 				wSem.Wait();
+				time_t first = time(0);
 				sleep(delay);
 				time_t last = time(0);
 				sharedMemory->thId = threadNum;
 				sharedMemory->repId = reportId++;
 				sharedMemory->tDelay = delay;
 				sharedMemory->tElap = (last-first);
-				// wSem.Signal();
+
 				rSem.Signal();
 
 				
