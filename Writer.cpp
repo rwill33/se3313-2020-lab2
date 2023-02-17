@@ -17,7 +17,7 @@ struct MyShared{
     
 };
 
-	Semaphore rSem("reader", 1, true);
+	Semaphore rSem("reader", 0, true);
 	Semaphore wSem("writer", 1, true);
 
 class WriterThread : public Thread{
@@ -50,7 +50,8 @@ class WriterThread : public Thread{
 				sharedMemory->repId = reportId++;
 				sharedMemory->tDelay = delay;
 				sharedMemory->tElap = (last-first);
-
+				
+				wSem.Signal();
 				rSem.Signal();
 
 				
@@ -59,7 +60,7 @@ class WriterThread : public Thread{
 				    break;
 				}
 			}
-	        return 1;	
+	        return 0;	
 		}
 };
 
@@ -89,10 +90,10 @@ int main(void)
 	}
 	while(!tStack.empty())
 	{
-	    th = tStack.top();
-	    th->flag = true;
-	    delete th;
-	    tStack.pop();
+		th = tStack.top();
+		th->flag = true;
+		delete th;
+		tStack.pop();
 	}
 
 }
